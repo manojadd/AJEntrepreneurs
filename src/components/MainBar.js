@@ -11,21 +11,26 @@ import Button from 'material-ui/Button';
 import Script from 'react-load-script';
 import constants from '../constants';
 import trekActionCreator from '../actions/trekActionCreator';
+import Grid from 'material-ui/Grid';
 
 
 
 const styleSheet = createStyleSheet('mainbar',()=>({
+  bouton:{
+  	width:"100%",height:"100%",
+  },
+  logo:{
+  	width:"100%",height:"100%",
+
+  }
+  ,
   appBar:{
-    position: 'relative',
+  	height:"6em",
+  	position:'fixed',
   },
-  display:{
-    display:'flex',
-  },
-  flex:{
-    flexGrow:20,
-  },
-  flexSingle:{
-    flexGrow:1,
+  toolBar:{
+  	height:'100%',
+  	padding:'0px',
   }
 }));
 
@@ -91,27 +96,52 @@ class MainBar extends Component {
 		
 
 		return (
-			<div>
+			<div >
+			<Grid container gutter={0}  onScroll={()=>{console.log("scrolling");}}>
+				<Grid item xs={12}>
         		<AppBar className={this.classes.appBar}>
-            		<Toolbar className={this.classes.display}>
-              			<Typography type="title" colorInherit className={this.classes.flex}>
-              				AJ Entreprenuers'
-              			</Typography>
-              			<Typography type="title" colorInherit className={this.classes.flexSingle}>
-              				{this.props.loginStatus===constants.SIGNED_IN?("Hello "+UserDetails.getName()):""}
-              			</Typography>
-              			<Button raised primary onClick={this.handleSignInClick}>
-              				{UserAvatar}
-              				{SignInButton}
-
-              			</Button>
+            		<Toolbar className={this.classes.toolBar} >
+						<Grid container gutter={0} style={{height:'100%'}}>
+							<Grid item xs={6} sm={4} md={3} style={{maxHeight:'100%',maxWidth:'100%'}}>
+              							<img style={{maxHeight:'150%',maxWidth:'100%',marginLeft:'20%'}} src='http://localhost:3001/images/Logo.png' alt='logo'/>
+              						
+              				</Grid>
+							<Grid item xs={6} sm={8} md={9} style={{maxHeight:'100%',maxWidth:'100%'}}>
+								<Grid container gutter={0} justify='flex-end' style={{height:'100%'}}>
+              						<Grid item xs={2}>
+              							<Button primary contrast className={this.classes.bouton}>
+              								Home
+              							</Button>
+              						</Grid>
+              						<Grid item xs={2}>
+              							<Button primary contrast className={this.classes.bouton}>
+              								Events
+              							</Button>
+              						</Grid>
+              						<Grid item xs={2}>
+              							<Button primary contrast  className={this.classes.bouton}>
+              								Information
+              								</Button>
+              						</Grid>
+              						<Grid item xs={2}>
+              							<Button primary contrast  className={this.classes.bouton}>
+              								About Us
+              							</Button>
+              						</Grid>
+              						<Grid item xs={2}>
+              							<Button primary contrast onClick={this.handleSignInClick} className={this.classes.bouton}>
+              								{UserAvatar}
+              								{SignInButton}
+              							</Button>
+              						</Grid>
+              					</Grid>
+              				</Grid>
+              			</Grid>
             		</Toolbar>
           		</AppBar>
-          		<Script
-            		url="https://apis.google.com/js/api.js"
-            		onLoad={this.handleClientLoad}
-            		onError={function(){}}
-        		/>
+          		</Grid>
+          	</Grid>
+          		
         	</div>
 		);
 	}

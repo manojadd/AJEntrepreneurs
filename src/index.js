@@ -15,6 +15,7 @@ class Index extends Component {
 		return (
 			<MuiThemeProvider theme={theme}>
 				<App />
+				
 			</MuiThemeProvider>
 		);
 	}
