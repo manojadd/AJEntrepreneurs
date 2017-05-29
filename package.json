@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.15.3",
     "immutability-helper": "^2.2.0",
-    "material-ui": "^1.0.0-alpha.13",
+    "material-ui": "^1.0.0-alpha.15",
+    "material-ui-old": "file:node_modules/material-ui-old",
+    "mongoose": "^4.10.2",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

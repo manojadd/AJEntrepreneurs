@@ -13,8 +13,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = DialogTitle;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -29,9 +27,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _Typography = require('../Typography');
 
@@ -41,8 +39,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //  weak
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiDialogTitle', function () {
-  var gutter = 24;
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiDialogTitle', function (theme) {
+  var gutter = theme.spacing.unit * 3;
   return {
     root: {
       margin: 0,
@@ -52,20 +50,17 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   };
 });
 
-function DialogTitle(props, context) {
+function DialogTitle(props) {
   var children = props.children,
+      classes = props.classes,
       className = props.className,
       disableTypography = props.disableTypography,
-      other = (0, _objectWithoutProperties3.default)(props, ['children', 'className', 'disableTypography']);
+      other = (0, _objectWithoutProperties3.default)(props, ['children', 'classes', 'className', 'disableTypography']);
 
-
-  var classes = context.styleManager.render(styleSheet);
 
   return _react2.default.createElement(
     'div',
-    (0, _extends3.default)({
-      className: (0, _classnames2.default)(classes.root, className)
-    }, other),
+    (0, _extends3.default)({ className: (0, _classnames2.default)(classes.root, className) }, other),
     disableTypography ? children : _react2.default.createElement(
       _Typography2.default,
       { type: 'title' },
@@ -80,7 +75,11 @@ DialogTitle.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -94,6 +93,4 @@ DialogTitle.defaultProps = {
   disableTypography: false
 };
 
-DialogTitle.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(DialogTitle);

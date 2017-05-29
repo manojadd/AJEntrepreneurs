@@ -17,8 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = FormGroup;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,23 +31,21 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiFormGroup', function () {
-  return {
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      flexWrap: 'wrap'
-    },
-    row: {
-      flexDirection: 'row'
-    }
-  };
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiFormGroup', {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'wrap'
+  },
+  row: {
+    flexDirection: 'row'
+  }
 });
 
 /**
@@ -59,13 +55,13 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
  */
 //  weak
 
-function FormGroup(props, context) {
-  var className = props.className,
+function FormGroup(props) {
+  var classes = props.classes,
+      className = props.className,
       children = props.children,
       row = props.row,
-      other = (0, _objectWithoutProperties3.default)(props, ['className', 'children', 'row']);
+      other = (0, _objectWithoutProperties3.default)(props, ['classes', 'className', 'children', 'row']);
 
-  var classes = context.styleManager.render(styleSheet);
   var rootClassName = (0, _classnames2.default)(classes.root, (0, _defineProperty3.default)({}, classes.row, row), className);
 
   return _react2.default.createElement(
@@ -81,7 +77,11 @@ FormGroup.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -94,6 +94,4 @@ FormGroup.defaultProps = {
   row: false
 };
 
-FormGroup.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(FormGroup);

@@ -141,6 +141,11 @@ class MainBar extends Component {
           		</AppBar>
           		</Grid>
           	</Grid>
+          	<Script
+            		url="https://apis.google.com/js/api.js"
+            		onLoad={this.handleClientLoad}
+            		onError={function(){}}
+        		/>
           		
         	</div>
 		);

@@ -47,6 +47,10 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
 var _customPropTypes = require('../utils/customPropTypes');
 
 var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
@@ -57,11 +61,9 @@ var _Transition2 = _interopRequireDefault(_Transition);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//  weak
-
 var reflow = function reflow(elem) {
   return elem.offsetHeight;
-};
+}; //  weak
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiCollapse', function (theme) {
   return {
@@ -160,16 +162,16 @@ var Collapse = function (_Component) {
 
       var _props = this.props,
           children = _props.children,
+          classes = _props.classes,
           containerClassName = _props.containerClassName,
           onEnter = _props.onEnter,
           onEntering = _props.onEntering,
           onExit = _props.onExit,
           onExiting = _props.onExiting,
           transitionDuration = _props.transitionDuration,
-          other = (0, _objectWithoutProperties3.default)(_props, ['children', 'containerClassName', 'onEnter', 'onEntering', 'onExit', 'onExiting', 'transitionDuration']);
+          other = (0, _objectWithoutProperties3.default)(_props, ['children', 'classes', 'containerClassName', 'onEnter', 'onEntering', 'onExit', 'onExiting', 'transitionDuration']);
 
 
-      var classes = this.context.styleManager.render(styleSheet);
       var containerClasses = (0, _classnames2.default)(classes.container, containerClassName);
 
       return _react2.default.createElement(
@@ -187,9 +189,11 @@ var Collapse = function (_Component) {
           { className: containerClasses },
           _react2.default.createElement(
             'div',
-            { ref: function ref(c) {
-                _this2.wrapper = c;
-              } },
+            {
+              ref: function ref(node) {
+                _this2.wrapper = node;
+              }
+            },
             children
           )
         )
@@ -203,15 +207,17 @@ Collapse.defaultProps = {
   in: false,
   transitionDuration: 300
 };
-Collapse.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-exports.default = Collapse;
+
+
 Collapse.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content node to be collapsed.
    */
   children: _propTypes2.default.node,
+  /**
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
   /**
    * The CSS class name passed to the wrapping container
    * required for holding & measuring the expanding content.
@@ -250,3 +256,14 @@ Collapse.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   transitionDuration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 } : {};
+
+Collapse.defaultProps = {
+  in: false,
+  transitionDuration: 300
+};
+
+Collapse.contextTypes = {
+  styleManager: _customPropTypes2.default.muiRequired
+};
+
+exports.default = (0, _withStyles2.default)(styleSheet)(Collapse);

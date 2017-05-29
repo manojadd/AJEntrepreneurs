@@ -51,13 +51,13 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _createHelper = require('recompose/createHelper');
+var _wrapDisplayName = require('recompose/wrapDisplayName');
 
-var _createHelper2 = _interopRequireDefault(_createHelper);
+var _wrapDisplayName2 = _interopRequireDefault(_wrapDisplayName);
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69,26 +69,25 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
     root: {
       display: 'inline-flex',
       alignItems: 'center',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      WebkitTapHighlightColor: 'rgba(0,0,0,0)'
     },
     hasLabel: {
       marginLeft: -12,
-      marginRight: 16 },
+      marginRight: theme.spacing.unit * 2 },
     labelText: {
       fontFamily: theme.typography.fontFamily,
       userSelect: 'none'
     },
     disabled: {
       color: theme.palette.text.disabled,
-      cursor: 'not-allowed'
+      cursor: 'default'
     }
   };
 });
 
 function withSwitchLabel(SwitchComponent) {
-  var _class, _temp2;
-
-  return _temp2 = _class = function (_Component) {
+  var SwitchLabel = function (_Component) {
     (0, _inherits3.default)(SwitchLabel, _Component);
 
     function SwitchLabel() {
@@ -118,21 +117,20 @@ function withSwitchLabel(SwitchComponent) {
         var _this2 = this;
 
         var _props = this.props,
+            classes = _props.classes,
             disabled = _props.disabled,
             label = _props.label,
             labelClassNameProp = _props.labelClassName,
-            other = (0, _objectWithoutProperties3.default)(_props, ['disabled', 'label', 'labelClassName']);
+            other = (0, _objectWithoutProperties3.default)(_props, ['classes', 'disabled', 'label', 'labelClassName']);
 
-
-        var classes = this.context.styleManager.render(styleSheet);
 
         var labelClassName = (0, _classnames2.default)(classes.root, (0, _defineProperty3.default)({}, classes.hasLabel, label && label.length), labelClassNameProp);
 
         var labelTextClassName = (0, _classnames2.default)(classes.labelText, (0, _defineProperty3.default)({}, classes.disabled, disabled));
 
         var switchElement = _react2.default.createElement(SwitchComponent, (0, _extends3.default)({
-          ref: function ref(c) {
-            _this2.switch = c;
+          ref: function ref(node) {
+            _this2.switch = node;
           },
           disabled: disabled
         }, other));
@@ -154,7 +152,13 @@ function withSwitchLabel(SwitchComponent) {
       }
     }]);
     return SwitchLabel;
-  }(_react.Component), _class.propTypes = {
+  }(_react.Component);
+
+  SwitchLabel.propTypes = process.env.NODE_ENV !== "production" ? {
+    /**
+     * Useful to extend the style applied to components.
+     */
+    classes: _propTypes2.default.object.isRequired,
     /**
      * If `true`, the control will be disabled.
      */
@@ -167,9 +171,13 @@ function withSwitchLabel(SwitchComponent) {
      * The className to be used in an enclosing label element.
      */
     labelClassName: _propTypes2.default.string
-  }, _class.contextTypes = {
-    styleManager: _customPropTypes2.default.muiRequired
-  }, _temp2;
+  } : {};
+
+  if (process.env.NODE_ENV !== 'production') {
+    SwitchLabel.displayName = (0, _wrapDisplayName2.default)(SwitchComponent, 'withSwitchLabel');
+  }
+
+  return (0, _withStyles2.default)(styleSheet)(SwitchLabel);
 }
 
-exports.default = (0, _createHelper2.default)(withSwitchLabel, 'withSwitchLabel', true, true);
+exports.default = withSwitchLabel;

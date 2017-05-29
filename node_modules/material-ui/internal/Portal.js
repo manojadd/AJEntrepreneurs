@@ -127,7 +127,8 @@ var Portal = function (_Component) {
 Portal.defaultProps = {
   open: false
 };
-exports.default = Portal;
+
+
 Portal.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
@@ -136,3 +137,5 @@ Portal.propTypes = process.env.NODE_ENV !== "production" ? {
   container: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
   open: _propTypes2.default.bool
 } : {};
+
+exports.default = Portal;

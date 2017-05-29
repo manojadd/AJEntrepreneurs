@@ -13,8 +13,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = CardContent;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -29,29 +27,29 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiCardContent', function () {
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiCardContent', function (theme) {
   return {
     cardContent: {
-      padding: 16,
+      padding: theme.spacing.unit * 2,
       '&:last-child': {
-        paddingBottom: 24
+        paddingBottom: theme.spacing.unit * 3
       }
     }
   };
 }); //  weak
 
-function CardContent(props, context) {
-  var classNameProp = props.className,
-      other = (0, _objectWithoutProperties3.default)(props, ['className']);
+function CardContent(props) {
+  var classes = props.classes,
+      classNameProp = props.className,
+      other = (0, _objectWithoutProperties3.default)(props, ['classes', 'className']);
 
 
-  var classes = context.styleManager.render(styleSheet);
   var className = (0, _classnames2.default)(classes.cardContent, classNameProp);
 
   return _react2.default.createElement('div', (0, _extends3.default)({ className: className }, other));
@@ -59,11 +57,13 @@ function CardContent(props, context) {
 
 CardContent.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string
 } : {};
 
-CardContent.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(CardContent);

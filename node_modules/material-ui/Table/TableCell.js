@@ -17,8 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = TableCell;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,9 +31,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55,13 +53,13 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       whiteSpace: 'pre'
     },
     padding: {
-      padding: '0 56px 0 24px',
+      padding: '0 ' + theme.spacing.unit * 7 + 'px 0 ' + theme.spacing.unit * 3 + 'px',
       '&:last-child': {
-        paddingRight: 24
+        paddingRight: theme.spacing.unit * 3
       }
     },
     compact: {
-      paddingRight: 24
+      paddingRight: theme.spacing.unit * 3
     },
     checkbox: {
       paddingLeft: 12,
@@ -69,33 +67,21 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
     },
     footer: {}
   };
-});
-
-/**
- * A material table cell.
- *
- * When placed in a `TableHead`, this will automatically render a `th` element.
- *
- * ```jsx
- * <TableCell>...</TableCell>
- * ```
- */
-//  weak
+}); //  weak
 
 function TableCell(props, context) {
   var _classNames;
 
-  var classNameProp = props.className,
+  var classes = props.classes,
+      classNameProp = props.className,
       children = props.children,
       compact = props.compact,
       checkbox = props.checkbox,
       numeric = props.numeric,
       disablePadding = props.disablePadding,
-      other = (0, _objectWithoutProperties3.default)(props, ['className', 'children', 'compact', 'checkbox', 'numeric', 'disablePadding']);
-  var table = context.table,
-      styleManager = context.styleManager;
+      other = (0, _objectWithoutProperties3.default)(props, ['classes', 'className', 'children', 'compact', 'checkbox', 'numeric', 'disablePadding']);
+  var table = context.table;
 
-  var classes = styleManager.render(styleSheet);
 
   var Component = table && table.head ? 'th' : 'td';
 
@@ -118,7 +104,11 @@ TableCell.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -143,6 +133,7 @@ TableCell.defaultProps = {
 };
 
 TableCell.contextTypes = {
-  table: _propTypes2.default.object,
-  styleManager: _customPropTypes2.default.muiRequired
+  table: _propTypes2.default.object
 };
+
+exports.default = (0, _withStyles2.default)(styleSheet)(TableCell);

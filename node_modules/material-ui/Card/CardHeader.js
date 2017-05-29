@@ -13,8 +13,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = CardHeader;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -29,9 +27,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _Typography = require('../Typography');
 
@@ -43,7 +41,7 @@ var _CardContent2 = _interopRequireDefault(_CardContent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiCardHeader', function () {
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiCardHeader', function (theme) {
   return {
     cardHeader: {
       display: 'flex',
@@ -51,7 +49,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
     },
     avatar: {
       flex: '0 0 auto',
-      marginRight: 16
+      marginRight: theme.spacing.unit * 2
     },
     content: {
       flex: '1 1 auto'
@@ -59,15 +57,15 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   };
 }); //  weak
 
-function CardHeader(props, context) {
+function CardHeader(props) {
   var avatar = props.avatar,
+      classes = props.classes,
       classNameProp = props.className,
       subheader = props.subheader,
       title = props.title,
-      other = (0, _objectWithoutProperties3.default)(props, ['avatar', 'className', 'subheader', 'title']);
+      other = (0, _objectWithoutProperties3.default)(props, ['avatar', 'classes', 'className', 'subheader', 'title']);
 
 
-  var classes = context.styleManager.render(styleSheet);
   var className = (0, _classnames2.default)(classes.cardHeader, classNameProp);
 
   // Adjustments that depend on the presence of an avatar
@@ -105,7 +103,11 @@ CardHeader.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   avatar: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -118,6 +120,4 @@ CardHeader.propTypes = process.env.NODE_ENV !== "production" ? {
   title: _propTypes2.default.node
 } : {};
 
-CardHeader.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(CardHeader);

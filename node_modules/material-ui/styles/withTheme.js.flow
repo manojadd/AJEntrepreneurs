@@ -8,12 +8,11 @@ import customPropTypes from '../utils/customPropTypes';
 export default function withTheme(BaseComponent) {
   const factory = createEagerFactory(BaseComponent);
 
-  const WithTheme = (ownerProps, context) => (
-    factory({ theme: context.theme, ...ownerProps })
-  );
+  const WithTheme = (ownerProps, context) =>
+    factory({ theme: context.styleManager.theme, ...ownerProps });
 
   WithTheme.contextTypes = {
-    theme: customPropTypes.muiRequired,
+    styleManager: customPropTypes.muiRequired,
   };
   WithTheme.displayName = wrapDisplayName(BaseComponent, 'withTheme');
 

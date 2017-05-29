@@ -4,34 +4,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createStyleSheet } from 'jss-theme-reactor';
-import customPropTypes from '../utils/customPropTypes';
+import withStyles from '../styles/withStyles';
 import Typography from '../Typography';
 import CardContent from './CardContent';
 
-export const styleSheet = createStyleSheet('MuiCardHeader', () => ({
+export const styleSheet = createStyleSheet('MuiCardHeader', theme => ({
   cardHeader: {
     display: 'flex',
     alignItems: 'center',
   },
   avatar: {
     flex: '0 0 auto',
-    marginRight: 16,
+    marginRight: theme.spacing.unit * 2,
   },
   content: {
     flex: '1 1 auto',
   },
 }));
 
-export default function CardHeader(props, context) {
-  const {
-    avatar,
-    className: classNameProp,
-    subheader,
-    title,
-    ...other
-  } = props;
+function CardHeader(props) {
+  const { avatar, classes, className: classNameProp, subheader, title, ...other } = props;
 
-  const classes = context.styleManager.render(styleSheet);
   const className = classNames(classes.cardHeader, classNameProp);
 
   // Adjustments that depend on the presence of an avatar
@@ -43,8 +36,7 @@ export default function CardHeader(props, context) {
       {avatar &&
         <div className={classes.avatar}>
           {avatar}
-        </div>
-      }
+        </div>}
       <div className={classes.content}>
         <Typography type={titleType} component="span">
           {title}
@@ -63,7 +55,11 @@ CardHeader.propTypes = {
    */
   avatar: PropTypes.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: PropTypes.object.isRequired,
+  /**
+   * @ignore
    */
   className: PropTypes.string,
   /**
@@ -76,6 +72,4 @@ CardHeader.propTypes = {
   title: PropTypes.node,
 };
 
-CardHeader.contextTypes = {
-  styleManager: customPropTypes.muiRequired,
-};
+export default withStyles(styleSheet)(CardHeader);

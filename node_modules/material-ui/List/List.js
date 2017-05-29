@@ -51,13 +51,13 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiList', function () {
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiList', function (theme) {
   return {
     root: {
       flex: '1 1 auto',
@@ -67,29 +67,18 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       padding: 0
     },
     padding: {
-      paddingTop: 8,
-      paddingBottom: 8
+      paddingTop: theme.spacing.unit,
+      paddingBottom: theme.spacing.unit
     },
     dense: {
-      paddingTop: 4,
-      paddingBottom: 4
+      paddingTop: theme.spacing.unit / 2,
+      paddingBottom: theme.spacing.unit / 2
     },
     subheader: {
       paddingTop: 0
     }
   };
-});
-
-/**
- * A material list root element.
- *
- * ```jsx
- * <List>
- *   <ListItem>....</ListItem>
- * </List>
- * ```
- */
-//  weak
+}); //  weak
 
 var List = function (_Component) {
   (0, _inherits3.default)(List, _Component);
@@ -112,6 +101,7 @@ var List = function (_Component) {
       var _classNames;
 
       var _props = this.props,
+          classes = _props.classes,
           classNameProp = _props.className,
           ComponentProp = _props.component,
           disablePadding = _props.disablePadding,
@@ -119,9 +109,8 @@ var List = function (_Component) {
           dense = _props.dense,
           subheader = _props.subheader,
           rootRef = _props.rootRef,
-          other = (0, _objectWithoutProperties3.default)(_props, ['className', 'component', 'disablePadding', 'children', 'dense', 'subheader', 'rootRef']);
+          other = (0, _objectWithoutProperties3.default)(_props, ['classes', 'className', 'component', 'disablePadding', 'children', 'dense', 'subheader', 'rootRef']);
 
-      var classes = this.context.styleManager.render(styleSheet);
       var className = (0, _classnames2.default)(classes.root, (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.dense, dense), (0, _defineProperty3.default)(_classNames, classes.padding, !disablePadding), (0, _defineProperty3.default)(_classNames, classes.subheader, subheader), _classNames), classNameProp);
 
       return _react2.default.createElement(
@@ -140,20 +129,19 @@ List.defaultProps = {
   dense: false,
   disablePadding: false
 };
-List.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-List.childContextTypes = {
-  dense: _propTypes2.default.bool
-};
-exports.default = List;
+
+
 List.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -172,7 +160,7 @@ List.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   disablePadding: _propTypes2.default.bool,
   /**
-   * @ignore
+   * Use that property to pass a ref callback to the root component.
    */
   rootRef: _propTypes2.default.func,
   /**
@@ -180,3 +168,9 @@ List.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   subheader: _propTypes2.default.node
 } : {};
+
+List.childContextTypes = {
+  dense: _propTypes2.default.bool
+};
+
+exports.default = (0, _withStyles2.default)(styleSheet)(List);

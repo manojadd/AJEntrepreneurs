@@ -17,8 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = ListItemText;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,9 +31,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _Typography = require('../Typography');
 
@@ -45,7 +43,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //  weak
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiListItemText', function () {
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiListItemText', function (theme) {
   return {
     root: {
       flex: '1 1 auto',
@@ -56,7 +54,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
     },
     inset: {
       '&:first-child': {
-        paddingLeft: 56
+        paddingLeft: theme.spacing.unit * 7
       }
     },
     dense: {
@@ -71,14 +69,14 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
 function ListItemText(props, context) {
   var _classNames;
 
-  var classNameProp = props.className,
+  var classes = props.classes,
+      classNameProp = props.className,
       primary = props.primary,
       secondary = props.secondary,
       inset = props.inset,
-      other = (0, _objectWithoutProperties3.default)(props, ['className', 'primary', 'secondary', 'inset']);
+      other = (0, _objectWithoutProperties3.default)(props, ['classes', 'className', 'primary', 'secondary', 'inset']);
   var dense = context.dense;
 
-  var classes = context.styleManager.render(styleSheet);
   var className = (0, _classnames2.default)(classes.root, (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.dense, dense), (0, _defineProperty3.default)(_classNames, classes.inset, inset), _classNames), classNameProp);
 
   return _react2.default.createElement(
@@ -99,7 +97,11 @@ function ListItemText(props, context) {
 
 ListItemText.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -118,6 +120,7 @@ ListItemText.defaultProps = {
 };
 
 ListItemText.contextTypes = {
-  dense: _propTypes2.default.bool,
-  styleManager: _customPropTypes2.default.muiRequired
+  dense: _propTypes2.default.bool
 };
+
+exports.default = (0, _withStyles2.default)(styleSheet)(ListItemText);

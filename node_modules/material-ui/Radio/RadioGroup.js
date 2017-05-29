@@ -47,9 +47,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _FormGroup = require('../Form/FormGroup');
 
@@ -59,14 +59,12 @@ var _helpers = require('../utils/helpers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiRadioGroup', function () {
-  return {
-    root: {
-      flex: '1 1 auto',
-      margin: 0,
-      padding: 0
-    }
-  };
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiRadioGroup', {
+  root: {
+    flex: '1 1 auto',
+    margin: 0,
+    padding: 0
+  }
 }); //  weak
 
 var RadioGroup = function (_Component) {
@@ -120,14 +118,13 @@ var RadioGroup = function (_Component) {
 
       var _props = this.props,
           children = _props.children,
+          classes = _props.classes,
           classNameProp = _props.className,
           name = _props.name,
           selectedValue = _props.selectedValue,
           onChange = _props.onChange,
-          other = (0, _objectWithoutProperties3.default)(_props, ['children', 'className', 'name', 'selectedValue', 'onChange']);
+          other = (0, _objectWithoutProperties3.default)(_props, ['children', 'classes', 'className', 'name', 'selectedValue', 'onChange']);
 
-
-      var classes = this.context.styleManager.render(styleSheet);
 
       this.radios = [];
 
@@ -143,8 +140,8 @@ var RadioGroup = function (_Component) {
           return (0, _react.cloneElement)(child, {
             key: index,
             name: name,
-            ref: function ref(c) {
-              _this2.radios.push(c);
+            innerRef: function innerRef(node) {
+              _this2.radios.push(node);
             },
             checked: selected,
             onChange: _this2.handleRadioChange
@@ -156,16 +153,17 @@ var RadioGroup = function (_Component) {
   return RadioGroup;
 }(_react.Component);
 
-RadioGroup.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
 RadioGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -192,4 +190,5 @@ RadioGroup.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   selectedValue: _propTypes2.default.string
 } : {};
-exports.default = RadioGroup;
+
+exports.default = (0, _withStyles2.default)(styleSheet)(RadioGroup);

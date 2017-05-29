@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createModalManager = createModalManager;
 
 var _style = require('dom-helpers/style');
 
@@ -130,3 +129,5 @@ function createModalManager() {
 
   return modalManager;
 }
+
+exports.default = createModalManager;

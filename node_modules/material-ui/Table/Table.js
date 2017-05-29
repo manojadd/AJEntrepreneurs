@@ -47,9 +47,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -63,19 +63,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       overflow: 'hidden'
     }
   };
-});
-
-/**
- * A material table root element.
- *
- * ```jsx
- * <Table>
- *   <TableHeader>...</TableHeader>
- *   <TableBody>...</TableBody>
- * </Table>
- * ```
- */
-//  weak
+}); //  weak
 
 var Table = function (_Component) {
   (0, _inherits3.default)(Table, _Component);
@@ -97,11 +85,11 @@ var Table = function (_Component) {
     key: 'render',
     value: function render() {
       var _props = this.props,
+          classes = _props.classes,
           classNameProp = _props.className,
           children = _props.children,
-          other = (0, _objectWithoutProperties3.default)(_props, ['className', 'children']);
+          other = (0, _objectWithoutProperties3.default)(_props, ['classes', 'className', 'children']);
 
-      var classes = this.context.styleManager.render(styleSheet);
       var className = (0, _classnames2.default)(classes.root, classNameProp);
 
       return _react2.default.createElement(
@@ -114,18 +102,23 @@ var Table = function (_Component) {
   return Table;
 }(_react.Component);
 
-Table.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-Table.childContextTypes = { table: _propTypes2.default.object };
-exports.default = Table;
 Table.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the table, normally `TableHeader` and `TableBody`.
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string
 } : {};
+
+Table.childContextTypes = {
+  table: _propTypes2.default.object
+};
+
+exports.default = (0, _withStyles2.default)(styleSheet)(Table);

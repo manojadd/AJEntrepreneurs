@@ -17,8 +17,6 @@ var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-exports.default = Toolbar;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,9 +31,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55,14 +53,14 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   });
 }); //  weak
 
-function Toolbar(props, context) {
+function Toolbar(props) {
   var children = props.children,
+      classes = props.classes,
       classNameProp = props.className,
       disableGutters = props.disableGutters,
-      other = (0, _objectWithoutProperties3.default)(props, ['children', 'className', 'disableGutters']);
+      other = (0, _objectWithoutProperties3.default)(props, ['children', 'classes', 'className', 'disableGutters']);
 
 
-  var classes = context.styleManager.render(styleSheet);
   var className = (0, _classnames2.default)(classes.root, (0, _defineProperty3.default)({}, classes.gutters, !disableGutters), classNameProp);
 
   return _react2.default.createElement(
@@ -78,7 +76,11 @@ Toolbar.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -91,6 +93,4 @@ Toolbar.defaultProps = {
   disableGutters: false
 };
 
-Toolbar.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(Toolbar);

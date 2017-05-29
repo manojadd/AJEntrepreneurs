@@ -37,6 +37,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -55,9 +59,9 @@ var _Popover = require('../internal/Popover');
 
 var _Popover2 = _interopRequireDefault(_Popover);
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _MenuList = require('./MenuList');
 
@@ -65,15 +69,11 @@ var _MenuList2 = _interopRequireDefault(_MenuList);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//  weak
-
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiMenu', function () {
-  return {
-    popover: {
-      maxHeight: 250
-    }
-  };
-});
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiMenu', {
+  popover: {
+    maxHeight: 250
+  }
+}); //  weak
 
 var Menu = function (_Component) {
   (0, _inherits3.default)(Menu, _Component);
@@ -137,8 +137,10 @@ var Menu = function (_Component) {
       var _props = this.props,
           anchorEl = _props.anchorEl,
           children = _props.children,
+          classes = _props.classes,
           className = _props.className,
           open = _props.open,
+          MenuListProps = _props.MenuListProps,
           onEnter = _props.onEnter,
           onEntering = _props.onEntering,
           onEntered = _props.onEntered,
@@ -147,17 +149,15 @@ var Menu = function (_Component) {
           onExited = _props.onExited,
           onRequestClose = _props.onRequestClose,
           transitionDuration = _props.transitionDuration,
-          other = (0, _objectWithoutProperties3.default)(_props, ['anchorEl', 'children', 'className', 'open', 'onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited', 'onRequestClose', 'transitionDuration']);
+          other = (0, _objectWithoutProperties3.default)(_props, ['anchorEl', 'children', 'classes', 'className', 'open', 'MenuListProps', 'onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited', 'onRequestClose', 'transitionDuration']);
 
-
-      var classes = this.context.styleManager.render(styleSheet);
 
       return _react2.default.createElement(
         _Popover2.default,
-        {
+        (0, _extends3.default)({
           anchorEl: anchorEl,
           getContentAnchorEl: this.getContentAnchorEl,
-          className: classes.popover,
+          className: (0, _classnames2.default)(classes.popover, className),
           open: open,
           enteredClassName: classes.entered,
           onEnter: this.handleEnter,
@@ -168,17 +168,16 @@ var Menu = function (_Component) {
           onExited: onExited,
           onRequestClose: onRequestClose,
           transitionDuration: transitionDuration
-        },
+        }, other),
         _react2.default.createElement(
           _MenuList2.default,
           (0, _extends3.default)({
             role: 'menu',
-            ref: function ref(c) {
-              _this2.menuList = c;
+            ref: function ref(node) {
+              _this2.menuList = node;
             },
-            className: className,
             onKeyDown: this.handleListKeyDown
-          }, other),
+          }, MenuListProps),
           children
         )
       );
@@ -191,10 +190,8 @@ Menu.defaultProps = {
   open: false,
   transitionDuration: 'auto'
 };
-Menu.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-exports.default = Menu;
+
+
 Menu.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The DOM element used to set the position of the menu.
@@ -205,9 +202,17 @@ Menu.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
+  /**
+   * Properties applied to the `MenuList` element.
+   */
+  MenuListProps: _propTypes2.default.object,
   /**
    * Callback fired before the Menu enters.
    */
@@ -247,3 +252,5 @@ Menu.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   transitionDuration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 } : {};
+
+exports.default = (0, _withStyles2.default)(styleSheet)(Menu);

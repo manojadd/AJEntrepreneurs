@@ -37,13 +37,13 @@ var _reactEventListener = require('react-event-listener');
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
-var _createHelper = require('recompose/createHelper');
-
-var _createHelper2 = _interopRequireDefault(_createHelper);
-
 var _createEagerFactory = require('recompose/createEagerFactory');
 
 var _createEagerFactory2 = _interopRequireDefault(_createEagerFactory);
+
+var _wrapDisplayName = require('recompose/wrapDisplayName');
+
+var _wrapDisplayName2 = _interopRequireDefault(_wrapDisplayName);
 
 var _customPropTypes = require('../utils/customPropTypes');
 
@@ -61,28 +61,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 //  weak
 
-var isWidthUp = exports.isWidthUp = function isWidthUp(screenWidth, breakpoint) {
+var isWidthUp = exports.isWidthUp = function isWidthUp(breakpoint, screenWidth) {
+  var inclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+  if (inclusive) {
+    return _breakpoints.keys.indexOf(breakpoint) <= _breakpoints.keys.indexOf(screenWidth);
+  }
+  return _breakpoints.keys.indexOf(breakpoint) < _breakpoints.keys.indexOf(screenWidth);
+};
+
+/**
+ * By default, returns true if screen width is the same or less than the given breakpoint.
+ * @param screenWidth
+ * @param breakpoint
+ * @param inclusive - defaults to true
+ */
+var isWidthDown = exports.isWidthDown = function isWidthDown(breakpoint, screenWidth) {
   var inclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
   if (inclusive) {
     return _breakpoints.keys.indexOf(screenWidth) <= _breakpoints.keys.indexOf(breakpoint);
   }
   return _breakpoints.keys.indexOf(screenWidth) < _breakpoints.keys.indexOf(breakpoint);
-};
-
-/**
- * By default, returns true if screen less than the given breakpoint.
- * @param screenWidth
- * @param breakpoint
- * @param inclusive - defaults to false
- */
-var isWidthDown = exports.isWidthDown = function isWidthDown(screenWidth, breakpoint) {
-  var inclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-  if (inclusive) {
-    return _breakpoints.keys.indexOf(screenWidth) >= _breakpoints.keys.indexOf(breakpoint);
-  }
-  return _breakpoints.keys.indexOf(screenWidth) > _breakpoints.keys.indexOf(breakpoint);
 };
 
 function withWidth() {
@@ -92,25 +92,23 @@ function withWidth() {
 
 
   return function (BaseComponent) {
-    var _class, _temp2;
-
     var factory = (0, _createEagerFactory2.default)(BaseComponent);
 
-    return _temp2 = _class = function (_Component) {
-      (0, _inherits3.default)(WithWidth, _Component);
+    var Width = function (_Component) {
+      (0, _inherits3.default)(Width, _Component);
 
-      function WithWidth() {
+      function Width() {
         var _ref;
 
         var _temp, _this, _ret;
 
-        (0, _classCallCheck3.default)(this, WithWidth);
+        (0, _classCallCheck3.default)(this, Width);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
           args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = WithWidth.__proto__ || (0, _getPrototypeOf2.default)(WithWidth)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Width.__proto__ || (0, _getPrototypeOf2.default)(Width)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
           width: null
         }, _this.deferTimer = null, _this.handleResize = function () {
           clearTimeout(_this.deferTimer);
@@ -120,7 +118,7 @@ function withWidth() {
         }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
       }
 
-      (0, _createClass3.default)(WithWidth, [{
+      (0, _createClass3.default)(Width, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
           this.updateWidth(window.innerWidth);
@@ -133,7 +131,7 @@ function withWidth() {
       }, {
         key: 'updateWidth',
         value: function updateWidth(innerWidth) {
-          var breakpoints = this.context.theme.breakpoints;
+          var breakpoints = this.context.styleManager.theme.breakpoints;
           var width = null;
 
           /**
@@ -192,11 +190,20 @@ function withWidth() {
           );
         }
       }]);
-      return WithWidth;
-    }(_react.Component), _class.contextTypes = {
-      theme: _customPropTypes2.default.muiRequired
-    }, _temp2;
+      return Width;
+    }(_react.Component);
+
+    Width.contextTypes = {
+      styleManager: _customPropTypes2.default.muiRequired
+    };
+
+
+    if (process.env.NODE_ENV !== 'production') {
+      Width.displayName = (0, _wrapDisplayName2.default)(BaseComponent, 'withWidth');
+    }
+
+    return Width;
   };
 }
 
-exports.default = (0, _createHelper2.default)(withWidth, 'withWidth');
+exports.default = withWidth;

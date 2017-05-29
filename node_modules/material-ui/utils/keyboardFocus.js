@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.focusKeyPressed = focusKeyPressed;
 exports.detectKeyboardFocus = detectKeyboardFocus;
 exports.listenForFocusKeys = listenForFocusKeys;
-exports.focusKeyPressed = focusKeyPressed;
 
 var _keycode = require('keycode');
 
@@ -32,6 +32,14 @@ function isFocusKey(event) {
   return FOCUS_KEYS.indexOf((0, _keycode2.default)(event)) !== -1;
 }
 
+function focusKeyPressed(pressed) {
+  if (typeof pressed !== 'undefined') {
+    internal.focusKeyPressed = Boolean(pressed);
+  }
+
+  return internal.focusKeyPressed;
+}
+
 function detectKeyboardFocus(instance, element, cb) {
   var attempt = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
@@ -53,12 +61,4 @@ function listenForFocusKeys() {
     });
     internal.listening = true;
   }
-}
-
-function focusKeyPressed(pressed) {
-  if (typeof pressed !== 'undefined') {
-    internal.focusKeyPressed = Boolean(pressed);
-  }
-
-  return internal.focusKeyPressed;
 }
