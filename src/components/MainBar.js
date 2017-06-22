@@ -4,9 +4,7 @@ import {withStyles,createStyleSheet} from 'material-ui/styles';
 import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
-//import Icon from 'material-ui/Icon';
 import Button from 'material-ui/Button';
 import Script from 'react-load-script';
 import constants from '../constants';
@@ -36,12 +34,12 @@ const styleSheet = createStyleSheet('mainbar',()=>({
 
 const mapStateToProps = (state) => {
 	return {
-		loginStatus : state.loginStatus,
-		discoveryUrl : state.discoveryUrl,
-		scope: state.scope,
-		clientId: state.ClientID,
-		googleAuth:state.GoogleAuth,
-		googleUser:state.GoogleUser,
+		loginStatus : state.trekReducer.loginStatus,
+		discoveryUrl : state.trekReducer.discoveryUrl,
+		scope: state.trekReducer.scope,
+		clientId: state.trekReducer.ClientID,
+		googleAuth:state.trekReducer.GoogleAuth,
+		googleUser:state.trekReducer.GoogleUser,
 	}
 }
 const mapDispatchToProps = (dispatch) => {
@@ -77,12 +75,12 @@ class MainBar extends Component {
 		let SignInButton = "";
 		let UserDetails = null;
 		let UserAvatar = null;
-		if(this.props.loginStatus===constants.SIGNED_OUT)
+		if(this.props.loginStatus===constants.mainbar.SIGNED_OUT)
 		{
 			SignInButton= "SIGN IN";
 			
 		}
-        else if(this.props.loginStatus===constants.SIGNED_IN)
+        else if(this.props.loginStatus===constants.mainbar.SIGNED_IN)
         {
         	
         	SignInButton= "SIGN OUT";
@@ -153,16 +151,16 @@ class MainBar extends Component {
 
 	//To load the client and auth2 modules from script.
 	handleClientLoad(){
-		console.log("Loaded api.js",);
+		//console.log("Loaded api.js",);
 		window.gapi.load('client:auth2',this.initClient);
 	}
 
 	//Will call  sign in and sign out depending on current status
 	handleSignInClick(){
 		console.log('google auth',this.props.googleAuth);
-		if(this.props.loginStatus===constants.SIGNED_OUT)
+		if(this.props.loginStatus===constants.mainbar.SIGNED_OUT)
 			this.props.googleAuth.signIn();
-		else if(this.props.loginStatus===constants.SIGNED_IN)
+		else if(this.props.loginStatus===constants.mainbar.SIGNED_IN)
 			this.props.googleAuth.signOut();
 		else
 		{}

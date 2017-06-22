@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "formsy-material-ui": "^0.6.0",
+    "formsy-react": "^0.19.2",
     "immutability-helper": "^2.2.0",
     "material-ui": "^1.0.0-alpha.15",
     "material-ui-old": "file:node_modules/material-ui-old",
@@ -15,7 +18,9 @@
     "react-redux": "^5.0.4",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "superagent": "^3.5.2"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"

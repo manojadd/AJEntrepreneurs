@@ -1,3 +1,3 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/wejustrek');
 module.exports = mongoose.connection;
