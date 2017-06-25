@@ -85,33 +85,34 @@ class MainBar extends Component {
             	<Toolbar>
 						<Grid container gutter={0} className={this.classes.stretch}>
 							<Grid item  xs={3}  >
-              					<img src="http://192.168.2.16:3001/images/Logo.png" className={this.classes.logoImage}/>
+              					<img src="http://192.168.2.16:3001/images/Logo.png"
+                         className={this.classes.logoImage} alt='Logo'/>
               </Grid>
 							<Grid item xs={6}  hidden={{ smDown: true }}
               >
 								<Grid container gutter={0} justify='center' className={this.classes.stretch}>
               						<Grid item xs={2}>
-              							<Button contrast  className={this.classes.bouton}>
+              							<Button color='contrast'  className={this.classes.bouton}>
               								Home
               							</Button>
               						</Grid>
               						<Grid item xs={2}>
-              							<Button  contrast className={this.classes.bouton}>
+              							<Button color='contrast' className={this.classes.bouton}>
               								Events
               							</Button>
               						</Grid>
               						<Grid item xs={3}>
-              							<Button color='accent'  className={this.classes.bouton}>
+              							<Button color='contrast'  className={this.classes.bouton}>
               								Information
               								</Button>
               						</Grid>
               						<Grid item xs={2}>
-              							<Button  contrast  className={this.classes.bouton}>
+              							<Button  color='contrast'  className={this.classes.bouton}>
               								About Us
               							</Button>
               						</Grid>
               						<Grid item xs={3}>
-              							<Button  contrast onClick={this.handleSignInClick} className={this.classes.bouton}>
+              							<Button  color='contrast' onClick={this.handleSignInClick} className={this.classes.bouton}>
               								{UserAvatar}
               								{SignInButton}
               							</Button>
@@ -122,19 +123,19 @@ class MainBar extends Component {
                         <ul className={this.classes.ul}>
                           <li className={this.classes.li}>
                             <a href="www.twitter.com"><img src="http://192.168.2.16:3001/icons/twitter_logo_white.svg"
-                                                       className={this.classes.icons}/></a>
+                                                       className={this.classes.icons} alt='twitter_link'/></a>
                           </li>
                           <li className={this.classes.li}>
                             <a href="www.facebook.com"><img src="http://192.168.2.16:3001/icons/facebook_logo_white.svg"
-                                                       className={this.classes.icons}/></a>
+                                                       className={this.classes.icons} alt='facebook_link'/></a>
                           </li>
                           <li className={this.classes.li}>
                             <a href="www.instagram.com"><img src="http://192.168.2.16:3001/icons/instagram_logo_white.svg"
-                                                       className={this.classes.icons}/></a>
+                                                       className={this.classes.icons} alt='instagram_link'/></a>
                           </li>
                           <li className={this.classes.li}>
                             <a href="www.youtube.com"><img src="http://192.168.2.16:3001/icons/youtube_logo_white.svg"
-                                                       className={this.classes.icons}/></a>
+                                                       className={this.classes.icons} alt='youtube_link'/></a>
                           </li>                          
                         </ul>
                       </Grid>

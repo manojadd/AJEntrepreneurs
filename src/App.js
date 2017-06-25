@@ -11,9 +11,10 @@ class App extends Component {
   render() {
     return (
       <div style={{backgroundImage: "url('http://localhost:3001/images/winter_mountain.jpg')",
-                        backgroundSize:'contain',
+                        backgroundSize:'cover',
                         backgroundColor: 'rgba(100,100,150,.5)', 
-                        backgroundBlendMode: 'multiply'
+                        backgroundBlendMode: 'multiply',
+                        backgroundAttachment:'fixed',
                   }}  
       >
         <Provider store={trekStore}>

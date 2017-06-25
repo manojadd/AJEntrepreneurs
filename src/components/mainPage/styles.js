@@ -1,9 +1,37 @@
 export default {
-	display1:{
-		height:'200px',
+	type1:{
+		paddingTop:'20px',
 
 	},
-	colorSecondary:{
-		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+	type2:{
+		paddingTop:'25px',
+	},
+	type3:{
+		paddingTop:'25px',
+	},
+	putCenter:{
+		display:'flex',
+		margin:'40px auto 10px'
+	},
+	row1:{
+		minHeight:'500px',
+	},
+	row2:{
+		minHeight:'350px',
+		backgroundImage:'url("http://localhost:3001/images/whirlpool.png")',
+		backgroundColor:'rgba(220,255,255,0.5)',
+		backgroundBlendMode:'multiply',
+
+	},
+	info:{
+		padding:'20px 100px',
+	},
+	row3:{
+		minHeight:'350px',
+		backgroundColor:'white',
 	}
+
+
+
+
 }
