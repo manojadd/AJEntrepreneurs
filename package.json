@@ -8,7 +8,7 @@
     "formsy-material-ui": "^0.6.0",
     "formsy-react": "^0.19.2",
     "immutability-helper": "^2.2.0",
-    "material-ui": "^1.0.0-alpha.15",
+    "material-ui": "^1.0.0-alpha.19",
     "material-ui-old": "file:node_modules/material-ui-old",
     "mongoose": "^4.10.2",
     "prop-types": "^15.5.10",
@@ -20,7 +20,8 @@
     "redux": "^3.6.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "superagent": "^3.5.2"
+    "superagent": "^3.5.2",
+    "typeface-roboto": "0.0.29"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"

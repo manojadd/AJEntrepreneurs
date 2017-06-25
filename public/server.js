@@ -5,6 +5,7 @@ const bodyParser= require('body-parser');
 let eventRouter = require('../src/routes/event.routes.js');
 
 app.use('/images',express.static(path.resolve('../src/images')));
+app.use('/icons',express.static(path.resolve('../src/icons')));
 app.use(bodyParser.json());
 
 //app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,6 +20,7 @@ app.use(function(req,res,next){
 
 
 
+
 app.use('/api',eventRouter);
 
 app.get('/',function(req,res){
@@ -26,6 +28,6 @@ app.get('/',function(req,res){
 });
 
 
-app.listen(3001, function () {
+app.listen(3001,'0.0.0.0', function () {
   console.log('Example app listening on port 3000!')
 })
